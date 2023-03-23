@@ -1,0 +1,34 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+<div class="col-sm-6 offset-sm-3">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Ansayfa</a></li>
+            <li class="breadcrumb-item"><a href="{{ todo.category.get_absolute_urls }}">{{ todo.category.title }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ todo.title }}</li>
+        </ol>
+    </nav>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{ todo.title }}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{{ todo.category }}</h6>
+            <p class="card-text"> {{ todo.content }}</p>
+            <ul class="list-unstyled">
+                <li><small>Oluşturulduğu zaman: {{ todo.created_at|date:"d/m/y h:s" }}</small></li>
+                <li><small>Güncellendiği zaman: {{ todo.updated_at|date:"d/m/y h:s" }}</small></li>
+            </ul>
+            <ul class="list-inline">
+                {% for tag in todo.tag.all %}
+                <li class="list-inline-item">
+                    <a href="{{ todo.tag.get_absolute_urls }}" class="">
+                        <span class="badge rounded-pill text-bg-primary">{{ tag }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            <a href="/" class="card-link">Geri dön</a>
+        </div>
+    </div>
+</div>
+{% endblock container %}

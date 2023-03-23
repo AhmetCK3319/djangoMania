@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+<div class="col-sm-6 offset-sm-3">
+    <h1 class="text-primary">TODO_LIST { {{ todos.count }} } </h1>
+    {% if category %}
+    <h2>Kategori: {{ category }}</h2>
+    {% elif tag %}
+    <h2>Tag: {{ tag }}</h2>
+    {% endif %}
+    <div class="list-group">
+        {% for todo in todos %}
+        <a href="{{ todo.get_absolute_urls }}" class="list-group-item list-group-item-action active">{{ todo.title }}</a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock container %}
