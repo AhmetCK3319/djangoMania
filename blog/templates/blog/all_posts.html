@@ -1,0 +1,66 @@
+{% extends 'core/base.html' %}
+
+{% block container %}
+
+<div class="row">
+    <div class="col-sm-8">
+        {% if category %}
+        <h1>{{ category.title|upper }}</h1>
+        {% elif tag %}
+        <h1>{{ tag.title|upper }}</h1>
+        {% else %}
+        <h1>Tüm Blog Postlar</h1>
+        {% endif %}
+
+        {% for post in posts %}
+        <div class="col mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm">
+                            <img src="{{ post.cover_image.url }}" class="w-100 img-thumbnail">
+                        </div>
+                        <div class="col-sm">
+                            <h5 class="card-title">{{ post.title|upper }}</h5>
+                            <p class="card-text"> {{ post.content|truncatewords_html:10|safe }} </p>
+                            <ul class="list-inline">
+                                {% for tag in post.tag.all %}
+                                <li class="list-inline-item">
+                                    <a href="{{ tag.get_absolute_urls }}">
+                                        <span class="badge text-bg-primary px-2">{{ tag.title|upper }}</span>
+                                    </a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{{ post.get_absolute_urls }}" class="card-link">İncele</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="col-sm-4">
+        <h3>Kategoriler :</h3>
+        <div class="list-group">
+            {% for category in categories %}
+            <a href="{{ category.get_absolute_urls }}" class="list-group-item list-group-item-action my-2"
+                aria-current="true">
+                {{ category.title|upper }}
+            </a>
+            {% endfor %}
+            <h3 class="my-2">Etiketler :</h3>
+            <ul class="list-inline ">
+                {% for tag in tags %}
+                <li class="list-inline-item mt-3">
+                    <a href="{{ tag.get_absolute_urls }}">
+                        <span class="badge text-bg-primary px-3">{{ tag.title|upper }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock container %}
